@@ -1,0 +1,17 @@
+contract ClickGame {
+  storage {
+    totalClicks: u32 = 0;
+    leaderboard: map(address, u32) = {};
+  }
+
+  entrypoint getTotalClicks() : u32 =
+    state.totalClicks
+
+  entrypoint incrementClicks() =
+    let userAddress = Call.caller
+    put(state{totalClicks = state.totalClicks + 1})
+    put(state{leaderboard[userAddress] = state.leaderboard[userAddress] + 1})
+
+  entrypoint getLeaderboard() : map(address, u32) =
+    state.leaderboard
+}
